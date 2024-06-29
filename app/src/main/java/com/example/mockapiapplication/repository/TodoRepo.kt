@@ -3,8 +3,6 @@ package com.example.mockapiapplication.repository
 import com.example.mockapiapplication.data.ApiService
 import com.example.mockapiapplication.data.ToDoItem
 import com.example.mockapiapplication.data.TodoDao
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class TodoRepo @Inject constructor(
@@ -14,7 +12,7 @@ class TodoRepo @Inject constructor(
 
     fun getAllItems() = dao.getAll()
 
-    suspend fun insertItem(item: ToDoItem) {
+    suspend fun addItem(item: ToDoItem) {
         dao.insert(item)
     }
 
@@ -30,15 +28,16 @@ class TodoRepo @Inject constructor(
         dao.deleteAll()
     }
 
-    suspend fun insertItems(items: Unit) {
-        dao.insertAll(items)
+    suspend fun insertItems(items: List<ToDoItem>) {
+        dao.insertAll(*items.toTypedArray())
     }
 
-    suspend fun fetchItemsFromApi() {
-        return withContext(Dispatchers.IO) {
-            // Make API call to fetch items
-            apiService.getTodoItems()
-        }
+    suspend fun fetchItemsFromApi(): List<ToDoItem> {
+        return apiService.fetchTodoItems()
+    }
+
+    suspend fun getItemCount(): Int{
+        return dao.getItemCount()
     }
 }
 

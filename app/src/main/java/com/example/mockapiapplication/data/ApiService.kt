@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 interface ApiService {
-    @GET("v3/506bed6a-6a75-442f-84c0-79fedcf56ef2")
+    @GET("v3/3fb2203d-3b8d-4071-b806-977ffd369be1")
     suspend fun fetchTodoItems(): List<ToDoItem>
     fun getTodoItems()
 }

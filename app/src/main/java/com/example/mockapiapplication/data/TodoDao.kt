@@ -1,6 +1,5 @@
 package com.example.mockapiapplication.data
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -21,7 +20,7 @@ interface TodoDao {
     suspend fun insert(item: ToDoItem)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(items: kotlin.Unit)
+    suspend fun insertAll(vararg items: ToDoItem)
 
     @Update
     suspend fun update(item: ToDoItem)
@@ -31,4 +30,7 @@ interface TodoDao {
 
     @Query("DELETE FROM todoitem")
     suspend fun deleteAll()
+
+    @Query("SELECT COUNT(*) FROM todoitem")
+    suspend fun getItemCount(): Int
 }
